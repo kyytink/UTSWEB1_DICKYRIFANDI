@@ -8,11 +8,20 @@ if (!isset($_SESSION['username'])) {
 }
 
 // =============================
-// DATA PRODUK (Commit 5)
+// DATA PRODUK (Commit 6 - Menu + Jumlah Acak)
 // =============================
-$kode_barang = ["B001", "B002", "B003", "B004", "B005", "B006"];
-$nama_barang = ["Miesop Kampung", "Keripik Singkong", "Cappucino", "Jus Alpukat", "Roti Bakar", "Ayam Penyet"];
-$harga_barang = [7000, 5000, 10000, 8000, 6000, 12000];
+$produk = [
+    ["kode" => "B001", "nama" => "Miesop Kampung", "harga" => 7000],
+    ["kode" => "B002", "nama" => "Keripik Singkong", "harga" => 5000],
+    ["kode" => "B003", "nama" => "Cappucino", "harga" => 10000],
+    ["kode" => "B004", "nama" => "Jus Alpukat", "harga" => 8000],
+    ["kode" => "B005", "nama" => "Ayam Penyet", "harga" => 12000],
+];
+
+// Acak urutan menu setiap refresh
+shuffle($produk);
+
+$grandtotal = 0;
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -36,7 +45,6 @@ $harga_barang = [7000, 5000, 10000, 8000, 6000, 12000];
             padding: 30px 40px;
         }
 
-        /* ====== HEADER FLEX ====== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -44,7 +52,6 @@ $harga_barang = [7000, 5000, 10000, 8000, 6000, 12000];
             margin-bottom: 25px;
         }
         .judul {
-            text-align: left;
             color: #0066ff;
         }
         .judul h2 {
@@ -53,7 +60,7 @@ $harga_barang = [7000, 5000, 10000, 8000, 6000, 12000];
             letter-spacing: 1px;
         }
         .judul p {
-            margin: 2px 0 0 0;
+            margin: 2px 0 0;
             font-size: 14px;
             color: #555;
         }
@@ -80,7 +87,6 @@ $harga_barang = [7000, 5000, 10000, 8000, 6000, 12000];
             transform: scale(1.05);
         }
 
-        /* ====== TABEL PRODUK ====== */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -95,13 +101,11 @@ $harga_barang = [7000, 5000, 10000, 8000, 6000, 12000];
             background-color: #f0f4ff;
             color: #333;
         }
-
         h3 {
             text-align: center;
             color: #0066ff;
             margin-bottom: 10px;
         }
-
         .footer {
             text-align: center;
             font-size: 12px;
@@ -113,13 +117,12 @@ $harga_barang = [7000, 5000, 10000, 8000, 6000, 12000];
 <body>
     <div class="container">
 
-        <!-- Header kiri-kanan -->
+        <!-- Header -->
         <div class="header">
             <div class="judul">
                 <h2>-- POLGAN MART --</h2>
                 <p>Sistem Penjualan Sederhana</p>
             </div>
-
             <div class="user-info">
                 <p>Selamat datang, <b><?= htmlspecialchars($_SESSION['username']); ?></b></p>
                 <a href="logout.php" class="logout">Logout</a>
@@ -135,17 +138,29 @@ $harga_barang = [7000, 5000, 10000, 8000, 6000, 12000];
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
                 <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Total</th>
             </tr>
-            <?php
-            for ($i = 0; $i < count($kode_barang); $i++) {
-                echo "<tr>
-                        <td>{$kode_barang[$i]}</td>
-                        <td>{$nama_barang[$i]}</td>
-                        <td>Rp " . number_format($harga_barang[$i], 0, ',', '.') . "</td>
-                      </tr>";
-            }
+            <?php foreach ($produk as $item): 
+                $jumlah = rand(1, 5);
+                $total = $item['harga'] * $jumlah;
+                $grandtotal += $total;
             ?>
+            <tr>
+                <td><?= $item['kode']; ?></td>
+                <td><?= $item['nama']; ?></td>
+                <td>Rp <?= number_format($item['harga'], 0, ',', '.'); ?></td>
+                <td><?= $jumlah; ?></td>
+                <td>Rp <?= number_format($total, 0, ',', '.'); ?></td>
+            </tr>
+            <?php endforeach; ?>
+            <tr style="background:#f9f9f9; font-weight:bold;">
+                <td colspan="4" align="right">Grand Total</td>
+                <td>Rp <?= number_format($grandtotal, 0, ',', '.'); ?></td>
+            </tr>
         </table>
+
+        <div class="footer">© 2025 POLGAN MART</div>
     </div>
 </body>
 </html>
