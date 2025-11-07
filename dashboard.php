@@ -112,6 +112,31 @@ $grandtotal = 0;
             color: #777;
             margin-top: 30px;
         }
+        .total-box {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: right;
+            font-size: 18px;
+            color: #0066ff;
+        }
+        .btn-cetak {
+            display: inline-block;
+            margin-top: 15px;
+            background: linear-gradient(90deg, #0066ff, #00bfff);
+            color: white;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-cetak:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
@@ -159,7 +184,13 @@ $grandtotal = 0;
                 <td>Rp <?= number_format($grandtotal, 0, ',', '.'); ?></td>
             </tr>
         </table>
-
+        
+        <div class="total-box">
+            Total Belanja: Rp <?= number_format($grandtotal, 0, ',', '.'); ?>
+        </div>
+        <div style="text-align:center;">
+            <a href="#" class="btn-cetak" onclick="window.print()">Cetak Total Belanja</a>
+        </div>
         <div class="footer">© 2025 POLGAN MART</div>
     </div>
 </body>
