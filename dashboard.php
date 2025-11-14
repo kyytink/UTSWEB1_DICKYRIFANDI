@@ -10,16 +10,16 @@ if (!isset($_SESSION['username'])) {
 // =============================
 // DATA PRODUK (Commit 6 - Menu + Jumlah Acak)
 // =============================
-$produk = [
-    ["kode" => "B001", "nama" => "Miesop Kampung", "harga" => 7000],
-    ["kode" => "B002", "nama" => "Keripik Singkong", "harga" => 5000],
-    ["kode" => "B003", "nama" => "Cappucino", "harga" => 10000],
-    ["kode" => "B004", "nama" => "Jus Alpukat", "harga" => 8000],
-    ["kode" => "B005", "nama" => "Ayam Penyet", "harga" => 12000],
+$barang = [
+    ["B001", "Miesop Kampung", 7000],
+    ["B002", "Keripik Singkong", 5000],
+    ["B003", "Cappucino", 10000],
+    ["B004", "Jus Alpukat", 8000],
+    ["B005", "Ayam Penyet", 12000],
 ];
 
 // Acak urutan menu setiap refresh
-shuffle($produk);
+shuffle($barang);
 
 $grandtotal = 0;
 ?>
@@ -166,18 +166,18 @@ $grandtotal = 0;
                 <th>Jumlah</th>
                 <th>Total</th>
             </tr>
-            <?php foreach ($produk as $item): 
-                $jumlah = rand(1, 5);
-                $total = $item['harga'] * $jumlah;
-                $grandtotal += $total;
-            ?>
-            <tr>
-                <td><?= $item['kode']; ?></td>
-                <td><?= $item['nama']; ?></td>
-                <td>Rp <?= number_format($item['harga'], 0, ',', '.'); ?></td>
-                <td><?= $jumlah; ?></td>
-                <td>Rp <?= number_format($total, 0, ',', '.'); ?></td>
-            </tr>
+            <?php foreach ($barang as $item): 
+        $jumlah = rand(1, 5);
+        $total = $item[2] * $jumlah;
+        $grandtotal += $total;
+?>
+    <tr>
+        <td><?= $item[0]; ?></td>
+        <td><?= $item[1]; ?></td>
+        <td>Rp <?= number_format($item[2], 0, ',', '.'); ?></td>
+        <td><?= $jumlah; ?></td>
+        <td>Rp <?= number_format($total, 0, ',', '.'); ?></td>
+    </tr>
             <?php endforeach; ?>
             <tr style="background:#f9f9f9; font-weight:bold;">
                 <td colspan="4" align="right">Grand Total</td>
